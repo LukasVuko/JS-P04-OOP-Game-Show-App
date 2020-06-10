@@ -19,14 +19,15 @@ class Phrase {
     });
   }
 
-  checkLetter() {
-    // Checks to see if letter selected by the player matches a letter in the phrase
+  checkLetter(letter) {
+    const boolean = document.getElementsByClassName(letter).length === 0;
+    return !boolean;
   }
 
-  showMatchedLetter() {
-    // Reveals the letter(s) on the board that matches the
-    // player's selection. To reveal the matching letter(s), select all of the letter DOM
-    // elements that have a CSS class name that matches the selected letter and
-    // replace each selected element's `hide` CSS class with the `show` CSS class.
+  showMatchedLetter(letter) {
+    Array.from(document.getElementsByClassName(letter)).forEach((letter) => {
+      letter.classList.remove('hide');
+      letter.classList.add('show');
+    });
   }
 }

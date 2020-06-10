@@ -6,13 +6,7 @@ class Game {
   }
 
   createPhrases() {
-    const arr = [
-      new Phrase('Life if like a box of chocolates'),
-      new Phrase('You shall not pass'),
-      new Phrase('The things you own end up owning you'),
-      new Phrase('Are you not entertained'),
-      new Phrase('This is sparta'),
-    ];
+    const arr = [new Phrase('TE A'), new Phrase('TE B')];
     return arr;
   }
 
@@ -33,18 +27,20 @@ class Game {
   handleInteraction() {}
 
   checkForWin() {
-    //This method checks to see if the player has revealed all of the letters in the active phrase.
+    return Array.from(document.getElementsByClassName('letter')).every((li) =>
+      li.classList.contains('show')
+    );
   }
 
   removeLife() {
-    //This method removes a life from the scoreboard, by replacing one
+    // This method removes a life from the scoreboard, by replacing one
     // of the `liveHeart.png` images with a `lostHeart.png` image (found in the `images`
     // folder) and increments the `missed` property. If the player has five missed
     // guesses (i.e they're out of lives), then end the game by calling the `gameOver()` method.
   }
 
   gameOver() {
-    //This method displays the original start screen overlay, and
+    // This method displays the original start screen overlay, and
     // depending on the outcome of the game, updates the overlay `h1` element with a
     // friendly win or loss message, and replaces the overlay’s `start` CSS class with
     // either the `win` or `lose` CSS class.

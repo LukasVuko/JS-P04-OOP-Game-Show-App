@@ -6,7 +6,13 @@ class Game {
   }
 
   createPhrases() {
-    const arr = [new Phrase('TE A'), new Phrase('TE B')];
+    const arr = [
+      new Phrase('may the force be with you'),
+      new Phrase('to infinity and beyond'),
+      new Phrase('say hello to my little friend'),
+      new Phrase('why so serious'),
+      new Phrase('you shall not pass'),
+    ];
     return arr;
   }
 
@@ -19,12 +25,10 @@ class Game {
 
   startGame() {
     document.getElementById('overlay').style.display = 'none';
-
+    this.resetGameAttributes();
     this.activePhrase = this.getRandomPhrase();
     this.activePhrase.addPhraseToDisplay();
   }
-
-  handleInteraction() {}
 
   checkForWin() {
     return Array.from(document.getElementsByClassName('letter')).every((li) =>
@@ -34,26 +38,60 @@ class Game {
 
   removeLife() {
     this.missed += 1;
-    // const lives = document.getElementsByClassName('tries');
-    console.log(this.missed);
-
-    // if (lives.length > 0) {
-    //   lives[0].firstElementChild.src = 'images/lostHeart.png';
-    //   lives[0].classList.remove('tries');
-    // } else {
-    //   console.log('Game over');
-    // }
-
-    // This method removes a life from the scoreboard, by replacing one
-    // of the `liveHeart.png` images with a `lostHeart.png` image (found in the `images`
-    // folder) and increments the `missed` property. If the player has five missed
-    // guesses (i.e they're out of lives), then end the game by calling the `gameOver()` method.
+    const lives = document.getElementsByClassName('tries');
+    this.missed <= 4
+      ? (lives[this.missed - 1].firstElementChild.src = 'images/lostHeart.png')
+      : game.gameOver(false);
   }
 
-  gameOver() {
-    // This method displays the original start screen overlay, and
-    // depending on the outcome of the game, updates the overlay `h1` element with a
-    // friendly win or loss message, and replaces the overlay’s `start` CSS class with
-    // either the `win` or `lose` CSS class.
+  gameOver(flag) {
+    const overlay = document.getElementById('overlay');
+    overlay.style.display = '';
+    if (flag) {
+      overlay.className = 'win';
+      overlay.querySelector('h1').innerText = 'You won!';
+    } else {
+      overlay.className = 'lose';
+      overlay.querySelector('h1').innerText = 'You lost!';
+    }
+  }
+
+  resetGameAttributes() {
+    const existingPhraseLetterArray = document.getElementById('phrase')
+      .firstElementChild.children;
+
+    if (existingPhraseLetterArray.length > 0) {
+      Array.from(existingPhraseLetterArray).forEach((letter) => {
+        letter.parentNode.removeChild(letter);
+      });
+    }
+
+    const qwerty = document.getElementsByClassName('key');
+
+    Array.from(qwerty).forEach((key) => {
+      key.className = 'key';
+      key.disabled = false;
+    });
+
+    const lives = document.getElementsByClassName('tries');
+
+    Array.from(lives).forEach((key) => {
+      key.firstElementChild.src = 'images/liveHeart.png';
+    });
+  }
+
+  handleInteraction(button) {
+    const letter = button.innerHTML;
+    button.disabled = true;
+    if (game.activePhrase.checkLetter(letter)) {
+      button.classList.add('chosen');
+      game.activePhrase.showMatchedLetter(letter);
+      if (game.checkForWin() === true) {
+        game.gameOver(true);
+      }
+    } else {
+      button.classList.add('wrong');
+      game.removeLife();
+    }
   }
 }

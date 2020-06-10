@@ -33,6 +33,17 @@ class Game {
   }
 
   removeLife() {
+    this.missed += 1;
+    // const lives = document.getElementsByClassName('tries');
+    console.log(missed);
+
+    // if (lives.length > 0) {
+    //   lives[0].firstElementChild.src = 'images/lostHeart.png';
+    //   lives[0].classList.remove('tries');
+    // } else {
+    //   console.log('Game over');
+    // }
+
     // This method removes a life from the scoreboard, by replacing one
     // of the `liveHeart.png` images with a `lostHeart.png` image (found in the `images`
     // folder) and increments the `missed` property. If the player has five missed

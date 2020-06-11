@@ -88,7 +88,7 @@ class Game {
           btn.classList.add('chosen');
           this.activePhrase.showMatchedLetter(letter);
           if (game.checkForWin() === true) {
-            this.gameOver(true);
+            setTimeout(() => this.gameOver(true), 1500);
           }
         } else {
           btn.classList.add('wrong');

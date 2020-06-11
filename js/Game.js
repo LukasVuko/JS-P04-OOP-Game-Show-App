@@ -59,7 +59,6 @@ class Game {
   resetGameAttributes() {
     const existingPhraseLetterArray = document.getElementById('phrase')
       .firstElementChild.children;
-
     if (existingPhraseLetterArray.length > 0) {
       Array.from(existingPhraseLetterArray).forEach((letter) => {
         letter.parentNode.removeChild(letter);
@@ -67,31 +66,35 @@ class Game {
     }
 
     const qwerty = document.getElementsByClassName('key');
-
     Array.from(qwerty).forEach((key) => {
       key.className = 'key';
       key.disabled = false;
     });
 
     const lives = document.getElementsByClassName('tries');
-
     Array.from(lives).forEach((key) => {
       key.firstElementChild.src = 'images/liveHeart.png';
     });
   }
 
-  handleInteraction(button) {
-    const letter = button.innerHTML;
-    button.disabled = true;
-    if (game.activePhrase.checkLetter(letter)) {
-      button.classList.add('chosen');
-      game.activePhrase.showMatchedLetter(letter);
-      if (game.checkForWin() === true) {
-        game.gameOver(true);
+  handleInteraction(letter) {
+    const qwertyArr = document.getElementsByClassName('key');
+
+    Array.from(qwertyArr).forEach((btn) => {
+      if (btn.innerText === letter) {
+        btn.disabled = true;
+
+        if (game.activePhrase.checkLetter(letter)) {
+          btn.classList.add('chosen');
+          game.activePhrase.showMatchedLetter(letter);
+          if (game.checkForWin() === true) {
+            game.gameOver(true);
+          }
+        } else {
+          btn.classList.add('wrong');
+          game.removeLife();
+        }
       }
-    } else {
-      button.classList.add('wrong');
-      game.removeLife();
-    }
+    });
   }
 }

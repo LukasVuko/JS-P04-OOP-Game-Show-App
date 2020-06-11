@@ -2,7 +2,7 @@ class Game {
   constructor() {
     this.missed = 0;
     this.phrases = this.createPhrases();
-    this.activePhrase = '';
+    this.activePhrase = null;
   }
 
   createPhrases() {
@@ -84,15 +84,15 @@ class Game {
       if (btn.innerText === letter) {
         btn.disabled = true;
 
-        if (game.activePhrase.checkLetter(letter)) {
+        if (this.activePhrase.checkLetter(letter)) {
           btn.classList.add('chosen');
-          game.activePhrase.showMatchedLetter(letter);
+          this.activePhrase.showMatchedLetter(letter);
           if (game.checkForWin() === true) {
-            game.gameOver(true);
+            this.gameOver(true);
           }
         } else {
           btn.classList.add('wrong');
-          game.removeLife();
+          this.removeLife();
         }
       }
     });

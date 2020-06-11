@@ -81,14 +81,14 @@ class Game {
     const qwertyArr = document.getElementsByClassName('key');
 
     Array.from(qwertyArr).forEach((btn) => {
-      if (btn.innerText === letter) {
+      if (btn.innerText === letter && btn.disabled === false) {
         btn.disabled = true;
 
         if (this.activePhrase.checkLetter(letter)) {
           btn.classList.add('chosen');
           this.activePhrase.showMatchedLetter(letter);
           if (game.checkForWin() === true) {
-            this.gameOver(true);
+            setTimeout(() => this.gameOver(true), 1500);
           }
         } else {
           btn.classList.add('wrong');
